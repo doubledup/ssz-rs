@@ -20,10 +20,7 @@ impl Cache {
     }
 
     pub fn invalidate(&mut self, leaf_index: usize) {
-        if let Some(mut bit) = self.dirty_leaves.get_mut(leaf_index) {
-            // TODO: unconditionally access bit
-            *bit = true;
-        }
+        self.dirty_leaves.get_mut(leaf_index).map(|mut bit| *bit = true);
     }
 
     pub fn resize(&mut self, bound: usize) {
