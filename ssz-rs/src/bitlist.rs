@@ -158,11 +158,14 @@ impl<const N: usize> Deserialize for Bitlist<N> {
             })
         }
 
+        // unwrap can't panic because the encoding isn't empty
         let (last_byte, prefix) = encoding.split_last().unwrap();
+        // TODO: from_slice can panic when prefix exceeds bit-vector capacity
         let mut result = BitlistInner::from_slice(prefix);
         let last = BitlistInner::from_element(*last_byte);
         let high_bit_index = 8 - last.trailing_zeros();
 
+        // index can't panic because last.len() == 8 >= high_bit_index
         if !last[high_bit_index - 1] {
             return Err(DeserializeError::InvalidByte(*last_byte))
         }
