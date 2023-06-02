@@ -158,6 +158,7 @@ impl<const N: usize> Deserialize for Bitlist<N> {
             })
         }
 
+        // unwrap is safe because encoding is not empty; qed
         let (last_byte, prefix) = encoding.split_last().unwrap();
         let mut result = BitlistInner::from_slice(prefix);
         let last = BitlistInner::from_element(*last_byte);

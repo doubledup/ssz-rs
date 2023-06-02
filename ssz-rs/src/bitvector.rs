@@ -164,6 +164,7 @@ impl<const N: usize> Deserialize for Bitvector<N> {
         }
         let remainder_count = N % 8;
         if remainder_count != 0 {
+            // unwrap is safe because encoding.len() == expected_length == byte_length(N) > 0; qed
             let last_byte = encoding.last().unwrap();
             let remainder_bits = last_byte >> remainder_count;
             if remainder_bits != 0 {

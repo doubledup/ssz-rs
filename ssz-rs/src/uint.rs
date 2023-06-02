@@ -88,6 +88,7 @@ impl U256 {
     }
 
     pub fn from_bytes_le(bytes: [u8; 32]) -> Self {
+        // unwrap is safe because bytes is exactly 32 bytes long; qed
         Self::deserialize(&bytes).unwrap()
     }
 
